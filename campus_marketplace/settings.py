@@ -169,6 +169,8 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import cloudinary_storage.storage
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -189,11 +191,18 @@ ALLOWED_HOSTS = ["*"]
 # CLOUDINARY CONFIG
 # =========================
 
-cloudinary.config(
-    cloud_name="diqidymlm",
-    api_key="869866817191795",
-    api_secret="_fHxe-zO2hdF3bqih4fcaiuFiEo"
-)
+# cloudinary.config(
+#     cloud_name="diqidymlm",
+#     api_key="869866817191795",
+#     api_secret="_fHxe-zO2hdF3bqih4fcaiuFiEo"
+# )
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'diqidymlm',
+    'API_KEY': '869866817191795',
+    'API_SECRET': '_fHxe-zO2hdF3bqih4fcaiuFiEo',
+}
+
 
 # =========================
 # APPS
