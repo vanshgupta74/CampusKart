@@ -17,11 +17,20 @@ import cloudinary.api
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'diqidymlm',
-    'API_KEY': '117612794922918',
-    'API_SECRET': 'L6MypReIXkCKHLzsQ5uBvmYCF_w',
+    'API_KEY': '869866817191795',
+    'API_SECRET': '_fHxe-zO2hdF3bqih4fcaiuFiEo',
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 
 
 
@@ -33,7 +42,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i&h=i)f+e*ar)7r1ce4w0!pq2z!s-4vpybh%cu8dk$m59qhmu^'
+# SECRET_KEY = 'django-insecure-i&h=i)f+e*ar)7r1ce4w0!pq2z!s-4vpybh%cu8dk$m59qhmu^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
