@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 class Product(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -9,7 +10,8 @@ class Product(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     category = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='products/')
+    # image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

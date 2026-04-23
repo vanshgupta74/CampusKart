@@ -197,11 +197,18 @@ ALLOWED_HOSTS = ["*"]
 #     api_secret="_fHxe-zO2hdF3bqih4fcaiuFiEo"
 # )
 
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'diqidymlm',
+#     'API_KEY': '869866817191795',
+#     'API_SECRET': '_fHxe-zO2hdF3bqih4fcaiuFiEo',
+# }
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'diqidymlm',
-    'API_KEY': '869866817191795',
-    'API_SECRET': '_fHxe-zO2hdF3bqih4fcaiuFiEo',
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
+
 
 
 # =========================
