@@ -166,12 +166,6 @@
 import os
 from pathlib import Path
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-import cloudinary_storage.storage
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # =========================
@@ -183,9 +177,10 @@ SECRET_KEY = os.environ.get(
     "django-insecure-dev-key-change-me"
 )
 
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+# DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 # =========================
 # CLOUDINARY CONFIG
@@ -203,11 +198,18 @@ ALLOWED_HOSTS = ["*"]
 #     'API_SECRET': '_fHxe-zO2hdF3bqih4fcaiuFiEo',
 # }
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'diqidymlm'),         
+#     'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '869866817191795'),
+#     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', '_fHxe-zO2hdF3bqih4fcaiuFiEo'),
+# }
+
+import cloudinary
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', 'diqidymlm'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY', '869866817191795'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET', '_fHxe-zO2hdF3bqih4fcaiuFiEo'),
+)
 
 
 
