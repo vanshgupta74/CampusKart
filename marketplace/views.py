@@ -108,6 +108,10 @@ from .forms import ProductForm
 #     products = Product.objects.all().order_by('-created_at')
 #     return render(request, 'marketplace/home.html', {'products': products})
 def home(request):
+
+    if not request.user.is_authenticated:
+        return redirect('register')
+
     query = request.GET.get('q')   # search input
 
     if query:
