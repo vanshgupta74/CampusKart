@@ -37,14 +37,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# import cloudinary
-# cloudinary.config(
-#     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', 'diqidymlm'),
-#     api_key=os.environ.get('CLOUDINARY_API_KEY', '869866817191795'),
-#     api_secret=os.environ.get('CLOUDINARY_API_SECRET', '_fHxe-zO2hdF3bqih4fcaiuFiEo'),
-# )
-
-
 # =========================
 # APPS
 # =========================
@@ -110,11 +102,20 @@ WSGI_APPLICATION = 'campus_marketplace.wsgi.application'
 # DATABASE
 # =========================
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', f'sqlite:///{BASE_DIR}/db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 # =========================
