@@ -160,3 +160,7 @@ STORAGES = {
     },
 }
 
+# Temporary - superuser auto-create
+SUPERUSER_NAME = os.environ.get('SUPERUSER_NAME', '')
+SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', '')
+SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', '')
