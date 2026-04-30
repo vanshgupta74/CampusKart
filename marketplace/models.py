@@ -12,6 +12,7 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     # image = models.ImageField(upload_to='products/')
     image = CloudinaryField('image')
+    contact_number = models.CharField(max_length=15, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
