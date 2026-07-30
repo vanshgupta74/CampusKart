@@ -217,11 +217,16 @@ def register(request):
         request.session['reg_email'] = email
         request.session['reg_password'] = password
 
+        from django.conf import settings
+
+        print("USER =", settings.EMAIL_HOST_USER)
+        print("PASS =", settings.EMAIL_HOST_PASSWORD)
+
         # Email bhejo
         send_mail(
             'CampusKart - Verify Your Email',
             f'Your OTP is: {otp}\n\nValid for 10 minutes only.',
-            'campuskart.noreply@gmail.com',
+            settings.DEFAULT_FROM_EMAIL,
             [email],
             fail_silently=False,
         )
