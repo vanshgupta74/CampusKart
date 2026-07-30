@@ -93,6 +93,8 @@
 #     logout(request)
 #     return redirect('home')
 
+import random
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -162,27 +164,69 @@ def product_detail(request, id):
 
 #     return render(request, 'marketplace/register.html')
 
+# def register(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         password = request.POST['password']
+
+#         # ✅ College Email Check — YEH ADD KARO
+#         if not email.endswith('@ietlucknow.ac.in'):
+#             return render(request, 'marketplace/register.html', {'error': 'Only IET Lucknow email allowed (@ietlucknow.ac.in)'})
+
+#         # duplicate username check
+#         if User.objects.filter(username=username).exists():
+#             return render(request, 'marketplace/register.html', {'error': 'Username already exists'})
+
+#         # ✅ Duplicate Email Check — YEH BHI ADD KARO
+#         if User.objects.filter(email=email).exists():
+#             return render(request, 'marketplace/register.html', {'error': 'Email already registered'})
+
+#         user = User.objects.create_user(username=username, email=email, password=password)
+#         login(request, user)
+#         return redirect('home')
+
+#     return render(request, 'marketplace/register.html')
+
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
-        # ✅ College Email Check — YEH ADD KARO
+        # College email check
         if not email.endswith('@ietlucknow.ac.in'):
-            return render(request, 'marketplace/register.html', {'error': 'Only IET Lucknow email allowed (@ietlucknow.ac.in)'})
+            return render(request, 'marketplace/register.html',
+                        {'error': 'Only IET Lucknow email allowed!'})
 
-        # duplicate username check
+        # Duplicate check
         if User.objects.filter(username=username).exists():
-            return render(request, 'marketplace/register.html', {'error': 'Username already exists'})
+            return render(request, 'marketplace/register.html',
+                        {'error': 'Username already exists!'})
 
-        # ✅ Duplicate Email Check — YEH BHI ADD KARO
         if User.objects.filter(email=email).exists():
-            return render(request, 'marketplace/register.html', {'error': 'Email already registered'})
+            return render(request, 'marketplace/register.html',
+                        {'error': 'Email already registered!'})
 
-        user = User.objects.create_user(username=username, email=email, password=password)
-        login(request, user)
-        return redirect('home')
+        # OTP Generate
+        otp = random.randint(100000, 999999)
+
+        # Session mein save karo
+        request.session['otp'] = otp
+        request.session['reg_username'] = username
+        request.session['reg_email'] = email
+        request.session['reg_password'] = password
+
+        # Email bhejo
+        send_mail(
+            'CampusKart - Verify Your Email',
+            f'Your OTP is: {otp}\n\nValid for 10 minutes only.',
+            'campuskart.noreply@gmail.com',
+            [email],
+            fail_silently=False,
+        )
+
+        return redirect('verify_otp')
 
     return render(request, 'marketplace/register.html')
 
@@ -208,3 +252,30 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+def verify_otp(request):
+    if request.method == 'POST':
+        entered_otp = request.POST['otp']
+        saved_otp = request.session.get('otp')
+
+        if int(entered_otp) == saved_otp:
+            # Account banao
+            user = User.objects.create_user(
+                username=request.session['reg_username'],
+                email=request.session['reg_email'],
+                password=request.session['reg_password']
+            )
+            login(request, user)
+
+            # Session clear karo
+            request.session.pop('otp', None)
+            request.session.pop('reg_username', None)
+            request.session.pop('reg_email', None)
+            request.session.pop('reg_password', None)
+
+            return redirect('home')
+        else:
+            return render(request, 'marketplace/verify_otp.html',
+                        {'error': 'Wrong OTP! Try again.'})
+
+    return render(request, 'marketplace/verify_otp.html')
