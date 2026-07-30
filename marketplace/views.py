@@ -218,10 +218,6 @@ def register(request):
         request.session['reg_password'] = password
 
         from django.conf import settings
-
-        print("USER =", settings.EMAIL_HOST_USER)
-        print("PASS =", settings.EMAIL_HOST_PASSWORD)
-
         # Email bhejo
         send_mail(
             'CampusKart - Verify Your Email',
