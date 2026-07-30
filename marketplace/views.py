@@ -146,15 +146,39 @@ def product_detail(request, id):
 
 
 # 🔥 Register
+# def register(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         password = request.POST['password']
+
+#         # duplicate username check
+#         if User.objects.filter(username=username).exists():
+#             return render(request, 'marketplace/register.html', {'error': 'Username already exists'})
+
+#         user = User.objects.create_user(username=username, email=email, password=password)
+#         login(request, user)
+#         return redirect('home')
+
+#     return render(request, 'marketplace/register.html')
+
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
 
+        # ✅ College Email Check — YEH ADD KARO
+        if not email.endswith('@ietlucknow.ac.in'):
+            return render(request, 'marketplace/register.html', {'error': 'Only IET Lucknow email allowed (@ietlucknow.ac.in)'})
+
         # duplicate username check
         if User.objects.filter(username=username).exists():
             return render(request, 'marketplace/register.html', {'error': 'Username already exists'})
+
+        # ✅ Duplicate Email Check — YEH BHI ADD KARO
+        if User.objects.filter(email=email).exists():
+            return render(request, 'marketplace/register.html', {'error': 'Email already registered'})
 
         user = User.objects.create_user(username=username, email=email, password=password)
         login(request, user)
