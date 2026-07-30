@@ -166,12 +166,11 @@ SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', '')
 SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', '')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'CampusKart <campuskart.noreply@gmail.com>'
+DEFAULT_FROM_EMAIL = 'CampusKart <shivagupta37205@gmail.com>'
+EMAIL_TIMEOUT = 10
 
 # Memory optimize karo
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # DB mein sessions rakho
